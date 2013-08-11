@@ -31,7 +31,7 @@ describe("Jedi:", function () {
     });
 
     it("Jedi должен наследоваться от Warrior", function () {
-        expect(typeof Jedi.prototype.constructor).toEqual(Warrior);
+        expect(Jedi.prototype.constructor).toEqual(Warrior);
     });
 
     it("Jedi получает имя и уровень", function () {
@@ -52,12 +52,12 @@ describe("Sith:", function () {
     }); 
 
     it("Sith должен наследоваться от Warrior", function () {
-        expect(typeof Sith.prototype.constructor).toEqual(Warrior);
+        expect(Sith.prototype.constructor).toEqual(Warrior);
     });
 
     it("Sith получает имя и уровень", function () {
-        var darth = new Sith("Darth ", 100);
-        expect(darth.name).toEqual("Darth");
+        var darth = new Sith("Darth Vader", 100);
+        expect(darth.name).toEqual("Darth Vader");
         expect(darth.level).toEqual(100);
     });
 
@@ -95,7 +95,9 @@ describe("Sith.toDarkSide:", function () {
     });
 
     it("Склонять на темную сторону можно только тех, кто на светлой - Джедаев", function () {
-        expect(palpatine.toLightSide(darth)).toThrow();
+        expect(function () {
+            palpatine.toDarkSide(darth);
+        }).toThrow(new Error("Invalid argument"));
     });
 
     it("Palpatine должен склонить Anakin Skywalker на темную сторону", function () {
@@ -105,7 +107,7 @@ describe("Sith.toDarkSide:", function () {
     });
 
     it("У Anakin Skywalker не хватает сил склонить Palpatine на светлую сторону", function () {
-        anakin.toDarkSide(palpatine);
+        anakin.toLightSide(palpatine);
         expect(palpatine.sideOfForce).toEqual("dark");
         expect(anakin.sideOfForce).toEqual("dark");
     });
@@ -120,7 +122,9 @@ describe("Jedi.toLightSide:", function () {
     });
 
     it("Склонять на светлую сторону можно только тех, кто на темной - Ситхов", function () {
-        expect(joda.toLightSide(anakin)).toThrow();
+        expect(function () {
+            joda.toLightSide(luke);
+        }).toThrow(new Error("Invalid argument"));
     });
 
     it("Вот что бы было, если бы Люк смог склонить отца на светлую сторону", function () {
