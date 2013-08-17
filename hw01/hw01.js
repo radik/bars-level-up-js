@@ -17,8 +17,9 @@
  * @param {Number} level Уровень воина.
  */
 function Warrior(name, level){
-  // Ваш код здесь...
-}
+  this.name = name;
+  this.level = level;
+};
 
 /**
  * Задание 2. Добавить метод attack нашему воину.
@@ -34,7 +35,7 @@ function Warrior(name, level){
  * @return {Number} Урон, наносимой атакой.
  */
 Warrior.prototype.attack = function() {
-  // Ваш код здесь...
+  return this.level * 0.1;
 };
 
 /**
@@ -52,16 +53,27 @@ Warrior.prototype.attack = function() {
  * @param {Number} level Уровень джедая.
  */
 function Jedi (name, level) {
-  // Ваш код здесь...
-}
+  this.name = name;
+  this.level = level;
+  this.sideOfForce = 'light';
+  this.code = 'Нет волнения — есть покой...';
+};
+
+Jedi.prototype = new Warrior("qewe", 100); 
 
 /**
  * Создает экземпляр ситха
  * @param {String} name Имя ситха.
  * @param {Number} level Уровень ситха.
  */
-// Ваш код здесь...
+function Sith (name, level) {
+  this.name = name;
+  this.level = level;
+  this.sideOfForce = 'dark';
+  this.code = 'Спокойствие — ложь, есть только страсть...';
+};
 
+Sith.prototype = new Warrior("qewe", 100);
 
 /**
  * Метод произнесения кодекса.
@@ -70,7 +82,9 @@ function Jedi (name, level) {
  * @name Warrior.getCode
  * @return {String} Кодекс воина.
  */
-// Ваш код здесь...
+Warrior.prototype.getCode = function(){
+   return this.code;
+};
 
 
 /**
@@ -91,7 +105,23 @@ function Jedi (name, level) {
  * @throws 
  * Если призываемый объект не является ситхом, выкидывается исключение.
  */
-// Ваш код здесь...
+Warrior.prototype.toLightSide = function(darth){
+  if(darth instanceof Sith)
+  {
+	if(this.level > darth.level){
+		darth.sideOfForce = this.sideOfForce;
+		darth.code = this.code;
+	}
+	else{
+		this.sideOfForce = darth.sideOfForce;
+		this.code = darth.code;
+	}
+  }
+  else
+  {
+	throw 'Invalid argument';
+  }
+};
 
 
 /**
@@ -112,4 +142,20 @@ function Jedi (name, level) {
  * @throws 
  * Если призываемый объект не является джедаем, выкидывается исключение.
  */
-// Ваш код здесь...
+Warrior.prototype.toDarkSide = function(anakin){
+  if(anakin instanceof Jedi)
+  {
+	if(this.level > anakin.level){
+		anakin.sideOfForce = this.sideOfForce;
+		anakin.code = this.code;
+	}
+	else{
+		this.sideOfForce = anakin.sideOfForce;
+		this.code = anakin.code;
+	}
+  }
+  else
+  {
+	throw 'Invalid argument';
+  }
+};
