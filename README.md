@@ -20,3 +20,4 @@ git clone git@github.com:radik/bars-level-up-js.git
 ## Домашние задания
 
 * <a href="hw01/">Задание 01 - Prototypes</a>
+* <a href="hw02/">Задание 02 - Module Pattern</a>
