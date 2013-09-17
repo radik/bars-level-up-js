@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>Bars Level Up - Javascript</title>
+	
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="../libs/deck/core/deck.core.css">
+	
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="../libs/deck/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../libs/deck/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../libs/deck/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../libs/deck/extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../libs/deck/extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../libs/deck/extensions/scale/deck.scale.css">
+
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="../libs/deck/themes/style/swiss.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="../libs/deck/themes/transition/horizontal-slide.css">
+	
+	<!-- Required Modernizr file -->
+	<script src="../libs/deck/modernizr.custom.js"></script>
+
+    <!-- Highlight -->
+    <link rel="stylesheet" href="../libs/highlight.js/styles/default.css">
+    <script src="../libs/highlight.js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+	<h2>Bars Level Up</h2>
+	<h1>JQuery</h1>
+</section>
+
+<section class="slide">
+	<h2>План</h2>
+	<ul>
+		<li>JQuery - быстрое введение</li>
+		<li>JQuery - производительность</li>
+		<li>JQuery - пишем плагин</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>1. Используйте append вне цикла.</p>
+<pre><code>
+    $.each( myArray, function( i, item ) {
+        var newListItem = "&lt;li&gt;" + item + "&lt;/li&gt;";
+        $( "#ballers" ).append( newListItem );
+    });
+    
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>1. Используйте append вне цикла - формируйте dom-фрагмент</p>
+<pre><code>
+    var frag = document.createDocumentFragment();
+     
+    $.each( myArray, function( i, item ) {
+     
+        var newListItem = document.createElement( "li" );
+        var itemText = document.createTextNode( item );
+     
+        newListItem.appendChild( itemText );
+     
+        frag.appendChild( newListItem );
+     
+    });
+     
+    $( "#ballers" )[ 0 ].appendChild( frag );
+        
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>1. Используйте append вне цикла. - формируйте string.</p>
+<pre><code>
+    var myHtml = "";
+     
+    $.each( myArray, function( i, item ) {
+     
+        myHtml += "&lt;li&gt;" + item + "&lt;/li&gt;";
+     
+    });
+     
+    $( "#ballers" ).html( myHtml );
+        
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>2. Запоминайте размер массива</p>
+<pre><code>
+    var myLength = myArray.length;
+     
+    for ( var i = 0; i &lt; myLength; i++ ) {
+     
+        // do stuff
+     
+    }
+            
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>3. Отцепляйте элемент во время работы - detach(v1.4)</p>
+<pre><code>
+    var $table = $( "#myTable" );
+    var $parent = $table.parent();
+     
+    $table.detach();
+     
+    // ... добавляем много-много строк в таблицу
+     
+    $parent.append( $table );
+            
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>4. Не работайте с несуществующим элементом.</p>
+<pre><code>
+    // Плохо: вызовется три функции, прежде чем выяснится,
+    // что такого элемента нет
+    $( "#nosuchthing" ).slideUp();
+     
+    // Лучше:
+    var $mySelection = $( "#nosuchthing" );
+     
+    if ( $mySelection.length ) {
+     
+        $mySelection.slideUp();
+     
+    }
+            
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>4. Не работайте с несуществующим элементом.</p>
+<pre><code>
+    // Лучше всего:
+    jQuery.fn.doOnce = function( func ) {
+     
+        this.length && func.apply( this );
+     
+        return this;
+     
+    }
+     
+    $( "li.cartitems" ).doOnce(function() { 
+        // что-то полезное...
+    });
+            
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>5. Оптимизируйте селекторы - начинать с id</p>
+<pre><code>
+// Быстро:
+$( "#container div.robotarm" );
+ 
+// Очень быстро:
+$( "#container" ).find( "div.robotarm" );
+
+</code></pre>
+</section>
+<section class="slide">
+	<h2>Performance</h2>
+	<p>5. Оптимизируйте селекторы - уточняйте тег в конце, а не в начале</p>
+<pre><code>
+    // Неоптимизировано:
+    $( "div.data .gonzalez" );
+     
+    // Оптимизировано:
+    $( ".data td.gonzalez" );
+
+</code></pre>
+</section>
+
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>5. Оптимизируйте селекторы - избегайте излишнего уточнения</p>
+<pre><code>
+    $( ".data table.attendees td.gonzalez" );
+ 
+    // Опустите промежуточный селектор.
+    $( ".data td.gonzalez" );
+
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>5. Оптимизируйте селекторы - избегайте универсальных селекторов</p>
+<pre><code>
+    $( ".buttons > *" ); // Очень дорого.
+    $( ".buttons" ).children(); // Намного лучше.
+     
+    $( ".category :radio" ); // Получится универсальный селектор.
+    $( ".category *:radio" ); // То же самое в явном виде.
+    $( ".category input:radio" ); // Намного лучше.
+
+</code></pre>
+</section>
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>6. Используйте css для изменения внешнего вида большого количества элементов</p>
+<pre><code>
+    // Нормально для 20 и менее элементов:
+    $( "a.swedberg" ).css( "color", "#0769ad" );
+     
+    // Намного быстрее:
+    $( "&lt;style type=\"text/css\"&gt;
+            a.swedberg { color: #0769ad }
+        &lt;/style&gt;").appendTo( "head" );
+    
+</code></pre>
+</section>
+
+
+<section class="slide">
+	<h2>Performance</h2>
+	<p>7. Не используйте jquery как черный ящик</p>
+    <h3><a href="http://bit.ly/jqsource">http://bit.ly/jqsource</a></h3>
+</section>
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="../libs/deck/jquery-1.7.2.min.js"></script>
+<script src="../libs/deck/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="../libs/deck/core/deck.core.js"></script>
+<script src="../libs/deck/extensions/hash/deck.hash.js"></script>
+<script src="../libs/deck/extensions/menu/deck.menu.js"></script>
+<script src="../libs/deck/extensions/goto/deck.goto.js"></script>
+<script src="../libs/deck/extensions/status/deck.status.js"></script>
+<script src="../libs/deck/extensions/navigation/deck.navigation.js"></script>
+<script src="../libs/deck/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>
