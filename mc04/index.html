@@ -297,6 +297,88 @@ var aaron = Ext.create('My.sample.Person', 'Aaron');
     ]
 });</code></pre>
 </section>
+
+
+<section class="slide">
+    <h2>Bars.B4 - ExtJs4</h2>
+    <h3>Routing</h3>
+    <p>Создать контроллер унаследовав его от B4.base.Controller и добавить ему миксин</p>
+<pre><code>
+    Ext.define('MyApp.MyController', {
+        extend: 'B4.base.Controller',
+
+        mixins: {
+            context: 'B4.mixins.Context'
+        }
+    });</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Bars.B4 - ExtJs4</h2>
+    <h3>Routing</h3>
+    <p>Определить конфигурацию для роутов:</p>
+<pre><code>Ext.define('MyApp.MyController', {
+        extend: 'B4.base.Controller',
+
+        mixins: {
+            context: 'B4.mixins.Context'
+        },
+
+        config: {
+            routes:[
+                {
+                    route: 'contractor/{id}/', //регулярное выражение
+                    fn: 'index' // имя функции
+                }
+            ]
+        }
+    });</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Bars.B4 - ExtJs4</h2>
+    <h3>Routing</h3>
+    <p>Определить функции, соответствующие роутам:</p>
+<pre><code>Ext.define('MyApp.MyController', {
+        ... все то же самое, как выше
+        index: function(id){ // функция в качестве параметра получит значение из url
+                             // например, если открыли url http://<host>/#contractor/1/ 
+                             // то функция index при вызове получит в качестве параметра 1
+
+            // Если нам нужно добавить компоненту в главный контейнер
+            // 1. Получаем компоненту, например, так:
+            var view = this.getMainPanel() || Ext.widget('contractor_nav_panel',
+                {
+                    title: 'Контрагент ' + id
+                });
+
+            // ВАЖНО!
+            this.bindContext(view); // 2. привязываем компоненту к текущему контексту
+            this.application.deployView(view); // 3. деплоим ее через application (подробнее о деплое ниже)
+        }
+    });</code></pre>
+</section>
+<section class="slide">
+    <h2>Bars.B4 - ExtJs4</h2>
+    <h3>Routing - Deploy</h3>
+    <p>По умолчанию при вызове <pre>this.application.deployView(view)</pre> метод defaultDeploy из PortalController
+    добавит компоненту view, переданную в качестве аргумента, в качестве нового таба в главный b4tabpanel.</p>
+    
+    <p>Если вы хотите, чтобы ваш контроллер имел возможность добавлять компоненту в пользовательский интерфейс и контекст приложения при этом нормально
+    работал, надо сделать следующее:</p>
+
+    <p>Добавить в контроллер объект deployViewKeys:</p>
+<pre><code>Ext.define('MyApp.MyController', {
+            ...
+
+            deployViewKeys:{
+                'deployViewItem': 'deployViewItemFn'
+            }
+        });</code></pre>
+        <p>Здесь 'deployViewItem' - ключ, который будет передаваться в качестве второго аргумента this.application.deployView(view, 'deployViewItem'),
+    'deployViewItemFn' - имя функции, которая будет ответственна за добавление компоненты. Ее тоже необходимо определить самому.</p>
+    <p>В качестве примера можно посмотреть на реализацию defaultDeploy из PortalController</p>
+</section>
 <!-- End slides. -->
 
 
