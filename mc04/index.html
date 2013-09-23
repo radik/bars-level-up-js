@@ -270,6 +270,33 @@ var aaron = Ext.create('My.sample.Person', 'Aaron');
     }
 })</code></pre>
 </section>
+
+<section class="slide">
+    <h2>Bars.B4 - ExtJs4</h2>
+    <h3>Aspects</h3>
+    
+<pre><code>Ext.define('GridActs', {
+   ...
+   alias: 'widget.gridacts',
+   gridSelector: null // селектор, который будет использоваться для получения grid'a
+   ...
+});</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Bars.B4 - ExtJs4</h2>
+    <h3>Aspects</h3>
+    
+<pre><code>Ext.define('MyController', {
+    extend: 'B4.base.Controller',
+    aspects: [
+       {
+          xtype: 'gridacts',
+          gridSelector: 'mygrid' // конкретный селектор
+       }
+    ]
+});</code></pre>
+</section>
 <!-- End slides. -->
 
 
