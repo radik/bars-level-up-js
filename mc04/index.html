@@ -358,8 +358,7 @@ var aaron = Ext.create('My.sample.Person', 'Aaron');
 <section class="slide">
     <h2>Bars.B4 - ExtJs4</h2>
     <h3>Routing - Deploy</h3>
-    <p>По умолчанию при вызове this.application.deployView(view) метод defaultDeploy из PortalController
-    добавит компоненту view, переданную в качестве аргумента, в качестве нового таба в главный b4tabpanel.</p>
+    <p>По умолчанию при вызове this.application.deployView(view) метод defaultDeploy из PortalController.</p>
     
     <p>Если вы хотите, чтобы ваш контроллер имел возможность добавлять компоненту в пользовательский интерфейс и контекст приложения при этом нормально
     работал, надо сделать следующее:</p>
@@ -375,6 +374,24 @@ var aaron = Ext.create('My.sample.Person', 'Aaron');
 <p>Здесь 'deployViewItem' - ключ, который будет передаваться в качестве второго аргумента this.application.deployView(view, 'deployViewItem'),
     'deployViewItemFn' - имя функции, которая будет ответственна за добавление компоненты. Ее тоже необходимо определить самому.</p>
     <p>В качестве примера можно посмотреть на реализацию defaultDeploy из PortalController</p>
+</section>
+
+<section class="slide">
+    <h2>Routing - IClientRouteMapRegistrar</h2>
+<pre><code>namespace Bars.Gkh.Overhaul
+{
+    using Bars.B4;
+
+    public class ClientRouteMapRegistrar : IClientRouteMapRegistrar
+    {
+        public void RegisterRoutes(ClientRouteMap map)
+        {
+            map.AddRoute(new ClientRoute("workprice/", "B4.controller.dict.WorkPrice"));
+            map.AddRoute(new ClientRoute("commonestateobject_create/", "B4.controller.CommonEstateObject", "create"));
+            map.AddRoute(new ClientRoute("commonestateobject_edit/{id}/", "B4.controller.CommonEstateObject", "edit"));
+        }
+    }
+}</code></pre>
 </section>
 <!-- End slides. -->
 
