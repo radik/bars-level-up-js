@@ -18,6 +18,8 @@
  */
 function Warrior(name, level){
   // Ваш код здесь...
+  this.name = name;
+  this.level = level;
 }
 
 /**
