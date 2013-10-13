@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bars Form Validation Plugin</title>
+</head>
+<body>
+	<form id="bars">
+		<label for="">Email</label>
+		<input type="text" name="email" id="email"/><br/>
+		<label for="">Phone</label>
+		<input type="text" name="phone" id="phone"/><br/> <!-- телефонный номер -->
+		<label for="">Zip</label>
+		<input type="text" name="zip" id="zip"/><br/> <!-- индекс -->
+		<input type="button" value="Send" />
+	</form>
+
+    <script type="text/javascript" src="../libs/jquery/jquery-2.0.3.js"></script>
+    <script type="text/javascript" src="bars-form.js"></script>
+    <script type="text/javascript">
+    	$("#bars input[type='button']").on('click', function(){
+    		$("#bars").validate();
+    	});
+    </script>
+</body>
+</html>
