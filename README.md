@@ -21,3 +21,5 @@ git clone git@github.com:radik/bars-level-up-js.git
 
 * <a href="hw01/">Задание 01 - Prototypes</a>
 * <a href="hw02/">Задание 02 - Module Pattern</a>
+* <a href="hw03/">Задание 03 - JQuery Plugin</a>
+* <a href="hw04/">Задание 04 - ExtJs 4 Application</a>
