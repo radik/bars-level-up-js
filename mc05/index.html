@@ -1,0 +1,237 @@
+<html lang="en"><head>
+		<meta charset="utf-8">
+
+		<title>EXtjs</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script><link rel="stylesheet" href="css/print/paper.css" type="text/css" media="print">
+	</head>
+
+	<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;">
+
+		<div class="reveal default center" data-transition-speed="default" data-background-transition="default">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides" style="width: 960px; height: 700px; zoom: 1;">
+				<section class="present">
+					<h1>Extjs</h1>
+					<h3>Иерархия компонент и система layout'ов в ExtJs 4</h3>
+					<p>
+						<small>Created by <a href="http://hakim.se">Вячеслав Кириллов</a></small>
+					</p>
+				</section>
+
+				<section class="stack present">
+					<section class="future" hidden="">
+						<h2>Иерархия компонент</h2>
+					</section>
+					<section class="">
+						<h2>Иерархия компонент</h2>
+						<img src="e.gif">
+					</section>
+					<section>
+						<pre style="box-shadow: none;">
+							<code data-trim contenteditable style="font-size: 18px; max-height: 700px;">
+Ext.define('AM.view.user.Edit', {
+    extend:'Ext.window.Window',
+    alias:'widget.useredit',
+    title:'Edit User',
+    layout:'fit',
+    autoShow:true,
+    items: [{
+                xtype:'form',
+                items: [{
+                        xtype:'textfield',
+                        name :'name',
+                        fieldLabel:'Name'
+                    },
+                    {
+                        xtype:'textfield',
+                        name :'email',
+                        fieldLabel:'Email'
+                    }]
+    }]
+});
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre style="box-shadow: none;">
+							<code data-trim contenteditable style="font-size: 18px; max-height: 700px;">
+Ext.define('AM.view.user.Edit', {
+    extend:'Ext.window.Window',
+    alias:'widget.useredit',
+    title:'Edit User',
+    layout:'fit',
+    autoShow:true,
+    initComponent: function() {
+        this.items = [{
+                xtype:'form',
+                items: [{
+                        xtype:'textfield',
+                        name :'name',
+                        fieldLabel:'Name'
+                    },
+                    {
+                        xtype:'textfield',
+                        name :'email',
+                        fieldLabel:'Email'
+                    }]
+            }];
+        this.callParent(arguments);
+    }
+});
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre style="box-shadow: none;">
+							<code data-trim contenteditable style="font-size: 18px; max-height: 700px;">
+Ext.define('AM.view.user.Edit', {
+    extend:'Ext.window.Window',
+    alias:'widget.useredit',
+    title:'Edit User',
+    layout:'fit',
+    autoShow:true,
+    initComponent: function() {
+    	var me = this;
+    	Ext.apply(me, {
+				items: [{
+	                xtype:'form',
+	                items: [{
+	                        xtype:'textfield',
+	                        name :'name',
+	                        fieldLabel:'Name'
+	                    },
+	                    {
+	                        xtype:'textfield',
+	                        name :'email',
+	                        fieldLabel:'Email'
+	                    }]
+	            }]
+				
+    	});
+        me.callParent(arguments);
+    }
+});
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre style="box-shadow: none;">
+							<code data-trim contenteditable style="font-size: 18px; max-height: 700px;">
+Ext.define('AM.view.MyView', {
+    extend:'Ext.view.view',
+    alias:'widget.myview',
+	store: 'someStore',
+    itemSelector: 'div.thumb-wrap',
+    emptyText: 'No images available',
+    tpl: new Ext.XTemplate(
+		'<tpl for=".">',
+			'<div style="margin-bottom: 10px;" class="thumb-wrap">',
+			  '<img src="{src}" />',
+			  '<br/><span>{caption}</span>',
+			'</div>',
+		'</tpl>')
+});
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section style="top: 0px; display: block;" class="stack present">
+					<section style="top: -153.5px; display: block;" class="future" hidden="">
+						<h2>Cистема layout'ов</h2>
+					</section>
+					<section style="top: -252.5px; display: block;" class="">
+						<a href="http://dev.sencha.com/deploy/ext-4.0.0/examples/layout-browser/layout-browser.html">Те самые layout'ы</a>
+					</section>
+					<section>
+						<p>Ошибки</p>
+						<pre style="box-shadow: none;">
+							<code data-trim contenteditable style="font-size: 18px; max-height: 700px;">
+Ext.define('AM.view.user.Edit', {
+    extend:'Ext.window.Window',
+    alias:'widget.useredit',
+    title:'Edit User',
+    layout:'vbox',
+    autoShow:true,
+    initComponent: function() {
+    	var me = this;
+    	Ext.applyIf(me, {
+				items: [
+				{
+	                xtype:'container',
+	                layout: 'fit',
+	                items: [
+	                	....
+	                ]
+	            },
+	            {
+	                xtype:'container',
+	                layout: 'fit',
+	                items: [
+	                	....
+	                ]
+	            }]
+				
+    	});
+        me.callParent(arguments);
+    }
+});
+							</code>
+				</section>
+
+			</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+		<script type="text/javascript" src="plugin/markdown/marked.js"></script>
+		<script type="text/javascript" src="plugin/markdown/markdown.js"></script>
+		<script type="text/javascript" src="plugin/highlight/highlight.js"></script>
+		<script type="text/javascript" src="plugin/zoom-js/zoom.js"></script>
+		<script type="text/javascript" src="plugin/notes/notes.js"></script>
+</body>
+</html>
