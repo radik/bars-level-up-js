@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Demo 1</title>
+    <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.min.css">
+    <script src="../../libs/angular/angular.min.js"></script>
+    <script src="../../libs/angular/angular-route.min.js"></script>
+</head>
+<body ng-app>
+    <div class="container">
+        <hr/>
+        <div class="input-group">
+            <span class="input-group-addon">class</span>
+            <input type="text" class="form-control" placeholder="Введите класс" ng-model="cls">
+        </div>
+        <hr/>
+        <div ng-class="cls">Hello, Angular!</div>
+    </div>
+</body>
+</html>

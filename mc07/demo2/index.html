@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Demo 2 - Scope</title>
+    <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.min.css">
+    <script src="../../libs/angular/angular.min.js"></script>
+    <script src="../../libs/angular/angular-route.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <style type="text/css">
+        .ng-scope {
+            border: dashed #ff2222 2px;
+            background-color: #ff9999;
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body ng-app="demo2">
+    <div class="container">
+        <input ng-model="rootModel" />
+        <div ng-controller="FirstController">
+            I'm inside {{name}} scope. I can see {{rootModel}}.
+        </div>
+
+        <div ng-controller="SecondController">
+            I'm inside {{name}} scope.
+
+            <ul>
+                <li ng-repeat="lastName in lastNames">{{lastName}}</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
