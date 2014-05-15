@@ -23,9 +23,13 @@
     
     <!-- Transition theme. More available in /themes/transition/ or create your own. -->
     <link rel="stylesheet" href="../libs/deck/themes/transition/horizontal-slide.css">
+
+    <link rel="stylesheet" href="../libs/highlight.js/styles/default.css">
     
     <!-- Required Modernizr file -->
     <script src="../libs/deck/modernizr.custom.js"></script>
+    <script src="../libs/highlight.js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body class="deck-container">
 
@@ -272,6 +276,26 @@ var aaron = Ext.create('My.sample.Person', 'Aaron');
 </section>
 
 <section class="slide">
+    <h2>Bars.B4 - ExtJs</h2>
+    <ul>
+        <li>B4.base.Controller</li>
+        <li>B4.base.Model</li>
+        <li>B4.base.Proxy</li>
+        <li>B4.base.Store</li>
+        <li>и другие базовые классы</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Overrides</h2>
+    <ul>
+        <li>Использовать по минимуму</li>
+        <li>Необходимо изменить поведение - используй наследование</li>
+    </ul>
+    В Bars.B4 - всего 3 override, 2 из них исправляют баги.
+</section>
+
+<section class="slide">
     <h2>Bars.B4 - ExtJs4</h2>
     <h3>Aspects</h3>
     
@@ -392,6 +416,46 @@ var aaron = Ext.create('My.sample.Person', 'Aaron');
         }
     }
 }</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Production vs Development</h2>
+    <div class="slide">
+        В Development:
+        <ul>
+            <li>Подключается extjs-all-debug.js</li>
+            <li>Используется динамическая подгрузка js-файлов</li>
+        </ul>
+    </div>
+    <div class="slide">
+        В Production:
+        <ul>
+            <li>Подключается extjs-all-min.js</li>
+            <li>Скрипты собираются в виде одного js-файла в минифицированном виде</li>
+        </ul>
+    </div>
+</section>
+
+<section class="slide">
+    <h2>Permissions</h2>
+    Реализовано в виде Aspect.
+    <pre><code>
+    {
+        xtype: 'permissionaspect',
+        applyBy: function (component, allowed) {
+            if (allowed) {
+                component.enable();
+            } else {
+                component.disable();
+            }
+        }
+        applyOn: {  event: 'show', selector: '#meetingActionWindow' },
+        permissions: [
+            { name: 'TM.Protokol.View', applyTo: '#meetingActionWindow #btnProtocol' },
+            { name: 'TM.Analytic.View', applyTo: '#meetingActionWindow #btnAnalytics' }
+        ]
+    }
+    </code></pre>
 </section>
 <!-- End slides. -->
 
